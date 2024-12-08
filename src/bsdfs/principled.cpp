@@ -102,10 +102,17 @@ public:
         PROFILE("Principled")
 
         const auto combination = combine(uv, wo);
-        NOT_IMPLEMENTED
 
         // hint: evaluate `combination.diffuse` and `combination.metallic` and
         // combine their results
+        const BsdfEval diffuseEval  = combination.diffuse.evaluate(wo, wi);
+        const BsdfEval metallicEval = combination.metallic.evaluate(wo, wi);
+
+        float diffuseWeight  = combination.diffuseSelectionProb;
+        float metallicWeight = 1.0f - diffuseWeight;
+
+        return diffuseEval.value * diffuseWeight +
+               metallicEval.value * metallicWeight;
     }
 
     BsdfSample sample(const Point2 &uv, const Vector &wo,
@@ -113,21 +120,28 @@ public:
         PROFILE("Principled")
 
         const auto combination = combine(uv, wo);
-        NOT_IMPLEMENTED
 
         // hint: sample either `combination.diffuse` (probability
         // `combination.diffuseSelectionProb`) or `combination.metallic`
+        if (rng.next() < combination.diffuseSelectionProb) {
+            return combination.diffuse.sample(wo, rng);
+        } else {
+            return combination.diffuse.sample(wo, rng);
+        }
     }
 
     std::string toString() const override {
-        return tfm::format("Principled[\n"
-                           "  baseColor = %s,\n"
-                           "  roughness = %s,\n"
-                           "  metallic  = %s,\n"
-                           "  specular  = %s,\n"
-                           "]",
-                           indent(m_baseColor), indent(m_roughness),
-                           indent(m_metallic), indent(m_specular));
+        return tfm::format(
+            "Principled[\n"
+            "  baseColor = %s,\n"
+            "  roughness = %s,\n"
+            "  metallic  = %s,\n"
+            "  specular  = %s,\n"
+            "]",
+            indent(m_baseColor),
+            indent(m_roughness),
+            indent(m_metallic),
+            indent(m_specular));
     }
 };
 

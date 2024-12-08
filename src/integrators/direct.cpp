@@ -28,8 +28,15 @@ public:
             // associated with the light sample.
             LightSample lightSample = m_scene->sampleLight(rng);
             if (lightSample.probability > 0) {
+                // Checking if normal is flipped
                 DirectLightSample directSample =
                     lightSample.light->sampleDirect(its.position, rng);
+
+                if (its.geometryNormal.dot(directSample.wi) > 0) {
+                    its.geometryNormal *= -1;
+                    its.shadingNormal *= -1;
+                    its.tangent *= -1;
+                }
 
                 // Trace a secondary ray in the direction of the light.
                 Ray secondaryRay;
@@ -46,7 +53,7 @@ public:
                     BsdfEval bsdf = its.evaluateBsdf(directSample.wi);
                     if (!bsdf.isInvalid()) {
                         contribution += directSample.weight * bsdf.value *
-                                       cosTheta / lightSample.probability;
+                                        cosTheta / lightSample.probability;
                     }
                 }
             }
