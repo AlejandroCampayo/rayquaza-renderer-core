@@ -1,0 +1,125 @@
+<scene id="scene">
+    <camera type="perspective" id="camera">
+        <integer name="width" value="400"/>
+        <integer name="height" value="480"/>
+
+        <string name="fovAxis" value="x"/>
+        <float name="fov" value="40"/>
+
+        <transform>
+            <translate y="0.215" z="-4"/>
+        </transform>
+    </camera>
+
+    <bsdf type="principled" id="wall material">
+        <texture name="baseColor" type="constant" value="1"/>
+        <texture name="specular" type="constant" value="1"/>
+        <texture name="metallic" type="constant" value="1"/>
+        <texture name="roughness" type="constant" value="0.5"/>
+    </bsdf>
+
+    <instance id="back">
+        <shape type="rectangle"/>
+        <ref id="wall material"/>
+        <transform>
+            <scale z="-1"/>
+            <translate z="1"/>
+        </transform>
+    </instance>
+
+    <instance id="floor">
+        <shape type="rectangle"/>
+        <ref id="wall material"/>
+        <transform>
+            <rotate axis="1,0,0" angle="90"/>
+            <translate y="1"/>
+        </transform>
+    </instance>
+
+    <instance id="ceiling">
+        <shape type="rectangle"/>
+        <ref id="wall material"/>
+        <transform>
+            <rotate axis="1,0,0" angle="-90"/>
+            <translate y="-1"/>
+        </transform>
+    </instance>
+
+    <instance id="left wall">
+        <shape type="rectangle"/>
+        <bsdf type="principled">
+            <texture name="baseColor" type="constant" value="0.9,0,0"/>
+            <texture name="specular" type="constant" value="0.2"/>
+            <texture name="metallic" type="constant" value="0"/>
+            <texture name="roughness" type="constant" value="0.2"/>
+        </bsdf>
+        <transform>
+            <rotate axis="0,1,0" angle="90"/>
+            <translate x="-1"/>
+        </transform>
+    </instance>
+
+    <instance id="right wall">
+        <shape type="rectangle"/>
+        <bsdf type="principled">
+            <texture name="baseColor" type="constant" value="0,0.9,0"/>
+            <texture name="specular" type="constant" value="0.2"/>
+            <texture name="metallic" type="constant" value="0"/>
+            <texture name="roughness" type="constant" value="0.2"/>
+        </bsdf>
+        <transform>
+            <rotate axis="0,1,0" angle="-90"/>
+            <translate x="1"/>
+        </transform>
+    </instance>
+
+    <instance id="lamp">
+        <shape type="rectangle"/>
+        <emission type="lambertian">
+            <texture name="emission" type="constant" value="2"/>
+        </emission>
+        <transform>
+            <scale value="0.9"/>
+            <rotate axis="1,0,0" angle="-90"/>
+            <translate y="-0.98"/>
+        </transform>
+    </instance>
+
+    <instance>
+        <shape type="mesh" filename="../meshes/bunny.ply"/>
+
+        <bsdf type="layeredmatrix">
+            <!-- <matrix name="Rt" value="1.4311281091817638,1.552927261741498,1.726921110470603,1.7457036137540618,  0.7432083657525645,0.6469357515910341,0.7802425914931477,1.2020236535538233,  0.8911114718355679,0.8492254023718114,0.6776034869287104,1.184234472423379,  1.1688067590339433,0.7536785429997995,0.9195309029024485,0.9663672660223697"/>
+            <matrix name="Rb" value="1.4311281091817638,1.552927261741498,1.726921110470603,1.7457036137540618,  0.7432083657525645,0.6469357515910341,0.7802425914931477,1.2020236535538233,  0.8911114718355679,0.8492254023718114,0.6776034869287104,1.184234472423379,  1.1688067590339433,0.7536785429997995,0.9195309029024485,0.9663672660223697"/>
+            <matrix name="Ttb" value="1.4311281091817638,1.552927261741498,1.726921110470603,1.7457036137540618,  0.7432083657525645,0.6469357515910341,0.7802425914931477,1.2020236535538233,  0.8911114718355679,0.8492254023718114,0.6776034869287104,1.184234472423379,  1.1688067590339433,0.7536785429997995,0.9195309029024485,0.9663672660223697"/>
+            <matrix name="Tbt" value="1.4311281091817638,1.552927261741498,1.726921110470603,1.7457036137540618,  0.7432083657525645,0.6469357515910341,0.7802425914931477,1.2020236535538233,  0.8911114718355679,0.8492254023718114,0.6776034869287104,1.184234472423379,  1.1688067590339433,0.7536785429997995,0.9195309029024485,0.9663672660223697"/> -->
+            <!-- <texture name="baseColor" type="constant" value="0.3, 0.4, 0.902"/> -->
+            <texture name="baseColor" type="constant" value="0.9, 0.2, 0.2"/>
+            <texture name="roughness" type="constant" value="0.05"/> 
+            <texture name="inroughness" type="constant" value="0.5"/>    
+        </bsdf>
+        <transform>
+            <scale value="0.8"/>
+            <rotate axis="1,0,0" angle="90"/>
+            <translate x="0.18" y="1.03"/>
+        </transform>
+    </instance>
+
+    <instance>
+        <shape type="rectangle"/>
+        <emission type="lambertian">
+            <texture name="emission" type="image" filename="../textures/bunninator.png" exposure="1"/>
+        </emission>
+        <transform>
+            <scale y="0.25"/>
+            <rotate axis="0,1,0" angle="180"/>
+            <rotate axis="0,0,1" angle="180"/>
+            <translate x="0.01" y="1.19" z="-1.2"/>
+        </transform>
+    </instance>
+</scene>
+<integrator type="pathtracer" depth="6">
+    <ref id="scene"/>
+    <image id="layered_bunny_matrix"/>
+    <sampler type="independent" count="256"/>
+</integrator>
