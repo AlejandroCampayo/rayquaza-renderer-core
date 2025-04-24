@@ -15,9 +15,9 @@ It was developed as part of the [Computer Graphics course](https://graphics.cg.u
 - Light types: Point, Directional, Area, and Image-based lighting
 - Next Event Estimation and full Path Tracing modes
 - Halton sampling
+- Alpha masking and shading normals
 - Image denoising (via Intel OpenImageDenoise)
 - Bloom and glare postprocessing effects.
-- Alpha masking and shading normals
 
 🔗 See [this demo](https://alejandrocampayo.github.io/rayquaza-renderer-website/) for an in-depth example of a complex scene rendered with Rayquaza.
 
