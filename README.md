@@ -33,14 +33,6 @@ However, **Intel OpenImageDenoise (OIDN)** may behave differently on non-MacBook
 ### Build Instructions
 
 ```bash
-mkdir build && cd build
-cmake -G Ninja -DCMAKE_BUILD_TYPE=Release ..
-ninja
-```
-
-You can also build using standard Makefiles:
-
-```bash
 cmake -S . -B build -G "Unix Makefiles"
 cmake --build build --parallel
 ```
@@ -53,7 +45,7 @@ Scenes are encoded as `.xml` files.
 To render the provided sample scenes:
 
 ```bash
-./build/Rayquazing tests/practical_1/mesh_bunny_flat.xml
+./build/Rayquazing tests/test_of_your_choice.xml
 ```
 
 To render your own Blender scenes, install the **Lightwave Blender Exporter** from:  
