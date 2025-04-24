@@ -15,8 +15,8 @@ public:
 
     // https://iquilezles.org/articles/normalsSDF/
     Vector computeNormal(const Point &p) const {
-        std::cout << "Computing normal at Point: (" << p[0] << ", " << p[1]
-                  << ", " << p[2] << ")" << std::endl;
+        // std::cout << "Computing normal at Point: (" << p[0] << ", " << p[1]
+        //           << ", " << p[2] << ")" << std::endl;
         const float h = 0.00001f; // Small step
         return
             // Vector(            // central differences

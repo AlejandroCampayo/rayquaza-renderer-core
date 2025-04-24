@@ -85,7 +85,6 @@ bool Instance::intersect(const Ray &worldRay, Intersection &its,
         if (m_alpha) {
             // Evaluate the alpha channel at the intersection
             float alpha = m_alpha->evaluate(its.uv).r();
-            // std::cout << "Alpha value is " << alpha << '\n';
             if (alpha < rng.next()) {
                 // Discard intersection
                 its.t = previousT;

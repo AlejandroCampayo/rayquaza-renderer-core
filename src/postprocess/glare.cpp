@@ -35,7 +35,6 @@ public:
                 Color color      = m_input->get(pixel);
                 float brightness = (color.r() + color.g() + color.b()) / 3.0f;
                 if (brightness > threshold) {
-                    std::cout << "Brightness" << brightness << std::endl;
                     glareAreas.get(pixel) = color;
                 } else {
                     glareAreas.get(pixel) = Color(0.0f);
